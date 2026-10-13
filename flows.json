@@ -1,0 +1,240 @@
+[
+    {
+        "id": "b724036796a83d7d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "mqtt_in_sensors",
+        "type": "mqtt in",
+        "z": "b724036796a83d7d",
+        "name": "ESP32 Sensors",
+        "topic": "esp32/sensors/data",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker_config",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "gauge_pressure",
+                "gauge_bmpTemp",
+                "gauge_humidity",
+                "gauge_dhtTemp",
+                "gauge_soil",
+                "chart_temp"
+            ]
+        ]
+    },
+    {
+        "id": "gauge_pressure",
+        "type": "ui_gauge",
+        "z": "b724036796a83d7d",
+        "name": "Pressure",
+        "group": "dashboard_group",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Pressure (hPa)",
+        "label": "hPa",
+        "format": "{{msg.payload.pressure | number:2}}",
+        "min": "950",
+        "max": "1050",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 520,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "gauge_bmpTemp",
+        "type": "ui_gauge",
+        "z": "b724036796a83d7d",
+        "name": "BMP Temp",
+        "group": "dashboard_group",
+        "order": 2,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "BMP Temp (F)",
+        "label": "F",
+        "format": "{{msg.payload.bmpTemp | number:2}}",
+        "min": "0",
+        "max": "150",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 530,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "gauge_humidity",
+        "type": "ui_gauge",
+        "z": "b724036796a83d7d",
+        "name": "Humidity",
+        "group": "dashboard_group",
+        "order": 3,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Humidity (%)",
+        "label": "%",
+        "format": "{{msg.payload.humidity | number:1}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 520,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "gauge_dhtTemp",
+        "type": "ui_gauge",
+        "z": "b724036796a83d7d",
+        "name": "DHT Temp",
+        "group": "dashboard_group",
+        "order": 4,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "DHT Temp (F)",
+        "label": "F",
+        "format": "{{msg.payload.dhtTemp | number:2}}",
+        "min": "0",
+        "max": "150",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 530,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "gauge_soil",
+        "type": "ui_gauge",
+        "z": "b724036796a83d7d",
+        "name": "Soil Moisture",
+        "group": "dashboard_group",
+        "order": 5,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Soil Moisture",
+        "label": "%",
+        "format": "{{msg.payload.soil}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#ca3838",
+            "#e6e600",
+            "#00b500"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 530,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "chart_temp",
+        "type": "ui_chart",
+        "z": "b724036796a83d7d",
+        "name": "Temperature Trend",
+        "group": "dashboard_group",
+        "order": 6,
+        "width": 12,
+        "height": 6,
+        "label": "Temp (F)",
+        "chartType": "line",
+        "legend": false,
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No data",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "1",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#ff7043",
+            "#ffca28"
+        ],
+        "outputs": 1,
+        "x": 550,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "mqtt_broker_config",
+        "type": "mqtt-broker",
+        "name": "EMQX Public",
+        "broker": "broker.emqx.io",
+        "port": "1883",
+        "clientid": "node-red-wokwi",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true
+    },
+    {
+        "id": "dashboard_group",
+        "type": "ui_group",
+        "name": "ESP32 Sensors",
+        "tab": "dashboard_tab",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "dashboard_tab",
+        "type": "ui_tab",
+        "name": "Wokwi Dashboard",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "538e28e0e0e06ccb",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
